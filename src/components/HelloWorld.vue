@@ -4,15 +4,15 @@
 
     <div style="display: flex; margin-top: 20px; height: 100px;">
       <transition name="el-zoom-in-center">
-        <div v-show="show2" class="transition-box">.el-zoom-in-中</div>
+        <div v-show="show2" class="transition-box">中</div>
       </transition>
 
       <transition name="el-zoom-in-top">
-        <div v-show="show2" class="transition-box">.el-zoom-in-上</div>
+        <div v-show="show2" class="transition-box">上</div>
       </transition>
 
       <transition name="el-zoom-in-bottom">
-        <div v-show="show2" class="transition-box">.el-zoom-in-下</div>
+        <div v-show="show2" class="transition-box">下</div>
       </transition>
     </div>
     <div class="date_picker">
