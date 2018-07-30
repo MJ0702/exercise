@@ -1,4 +1,4 @@
-<template>
+<template>  
   <!-- 按钮显隐-->
   <div>
     <el-button @click="show2 = !show2">Click Me</el-button>
@@ -15,6 +15,25 @@
       <transition name="el-zoom-in-bottom">
         <div v-show="show2" class="transition-box">3</div>
       </transition>
+    </div>
+    <!--轮播 -->
+    <div>
+      <div class="block">
+        <span class="demonstration">默认 Hover 指示器触发</span>
+        <el-carousel height="250px">
+          <el-carousel-item v-for="item in imgList" :key="item.id">
+            <img :src="item.url">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <!-- <div class="block">
+        <span class="demonstration">Click 指示器触发</span>
+        <el-carousel trigger="click" height="250px">
+          <el-carousel-item v-for="item2 in imgList2" :key="item2.id">
+            <img :src="item2.url">
+          </el-carousel-item>
+        </el-carousel>
+      </div> -->
     </div>
     <!-- 日期选择 -->
     <div class="date_picker">
@@ -125,26 +144,20 @@
           age: [
             { validator: checkAge, trigger: 'blur' }
           ]
-        }
+        },
+        imgList:[
+          {id:0,url:'../assets/01.jpg'},
+          {id:1,url:'../assets/02.jpg'},
+          {id:2,url:'../assets/03.jpg'}
+        ],
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
+      //改变时间
       timeChange(val) {
           console.log(val)
         },
+      //提交表单
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -155,6 +168,7 @@
           }
         });
       },
+      //表单重置
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
@@ -181,5 +195,24 @@
   }
   .form_rules{
     width: 500px;
+  }
+  /* 轮播 */
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+     background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+     background-color: #d3dce6;
+  }
+  .lunbo{
+    height: 400px;
   }
 </style>
