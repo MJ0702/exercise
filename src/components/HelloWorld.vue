@@ -17,23 +17,23 @@
       </transition>
     </div>
     <!--轮播 -->
-    <div>
+    <div class="lunbo_content">
       <div class="block">
         <span class="demonstration">默认 Hover 指示器触发</span>
         <el-carousel height="250px">
           <el-carousel-item v-for="item in imgList" :key="item.id">
-            <img :src="item.url">
+            <img :src="item.url" class="lunbo">
           </el-carousel-item>
         </el-carousel>
       </div>
-      <!-- <div class="block">
+      <div class="block">
         <span class="demonstration">Click 指示器触发</span>
         <el-carousel trigger="click" height="250px">
-          <el-carousel-item v-for="item2 in imgList2" :key="item2.id">
-            <img :src="item2.url">
+          <el-carousel-item v-for="item in imgList" :key="item.id">
+            <img :src="item.url" class="lunbo">
           </el-carousel-item>
         </el-carousel>
-      </div> -->
+      </div>
     </div>
     <!-- 日期选择 -->
     <div class="date_picker">
@@ -146,9 +146,9 @@
           ]
         },
         imgList:[
-          {id:0,url:'../assets/01.jpg'},
-          {id:1,url:'../assets/02.jpg'},
-          {id:2,url:'../assets/03.jpg'}
+          {id:0,url:require('../assets/1.jpg')},
+          {id:1,url:require('../assets/3.jpg')},
+          {id:2,url:require('../assets/4.jpg')},
         ],
       };
     },
@@ -212,7 +212,11 @@
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
+  .lunbo_content{
+    width: 50%;
+  }
   .lunbo{
-    height: 400px;
+    height: 100%;
+    width: 100%;
   }
 </style>
