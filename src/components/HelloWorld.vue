@@ -1,85 +1,127 @@
 <template>  
   <!-- 按钮显隐-->
   <div>
-    <el-button @click="show2 = !show2">Click Me</el-button>
+    <!-- Tab标签 -->
+    <div>
+      <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
+        <el-radio-button label="top">top</el-radio-button>
+        <el-radio-button label="right">right</el-radio-button>
+        <el-radio-button label="bottom">bottom</el-radio-button>
+        <el-radio-button label="left">left</el-radio-button>
+      </el-radio-group>
+      <el-tabs :tab-position="tabPosition">
+        <el-tab-pane label="first">
+          <div>
+            <el-button @click="show2 = !show2">Click Me</el-button>
+          <!-- 动画过渡效果 -->
+            <div style="display: flex; margin-top: 20px; height: 100px;">
+              <transition name="el-zoom-in-center">
+                <div v-show="show2" class="transition-box">1</div>
+              </transition>
 
-    <div style="display: flex; margin-top: 20px; height: 100px;">
-      <transition name="el-zoom-in-center">
-        <div v-show="show2" class="transition-box">1</div>
-      </transition>
+              <transition name="el-zoom-in-top">
+                <div v-show="show2" class="transition-box">2</div>
+              </transition>
 
-      <transition name="el-zoom-in-top">
-        <div v-show="show2" class="transition-box">2</div>
-      </transition>
-
-      <transition name="el-zoom-in-bottom">
-        <div v-show="show2" class="transition-box">3</div>
-      </transition>
-    </div>
-    <!--轮播 -->
-    <div class="lunbo_content">
-      <div class="block">
-        <span class="demonstration">默认 Hover 指示器触发</span>
-        <el-carousel height="250px">
-          <el-carousel-item v-for="item in imgList" :key="item.id">
-            <img :src="item.url" class="lunbo">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="block">
-        <span class="demonstration">Click 指示器触发</span>
-        <el-carousel trigger="click" height="250px">
-          <el-carousel-item v-for="item in imgList" :key="item.id">
-            <img :src="item.url" class="lunbo">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </div>
-    <!-- 日期选择 -->
-    <div class="date_picker">
-      <el-date-picker
-        v-model="date"
-        @change="timeChange"
-        type="daterange"
-        size="medium"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :default-time="['00:00:00', '23:59:59']">
-      </el-date-picker>
-    </div>
-    <!--表单验证-->
-    <div class="form_rules">
-      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model.number="ruleForm2.age"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-          <el-button @click="resetForm('ruleForm2')">重置</el-button>
-        </el-form-item>
-      </el-form>
-      <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item
-          label="年龄"
-          prop="age"
-          :rules="[
-            { required: true, message: '年龄不能为空'},
-            { type: 'number', message: '年龄必须为数字值'}
-          ]"
-        >
-          <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
-          <el-button @click="resetForm('numberValidateForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
+              <transition name="el-zoom-in-bottom">
+                <div v-show="show2" class="transition-box">3</div>
+              </transition>
+            </div>
+            <!--轮播 -->
+            <div class="lunbo_content">
+              <div class="block">
+                <span class="demonstration">默认 Hover 指示器触发</span>
+                <el-carousel height="250px">
+                  <el-carousel-item v-for="item in imgList" :key="item.id">
+                    <img :src="item.url" class="lunbo">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+              <div class="block">
+                <span class="demonstration">Click 指示器触发</span>
+                <el-carousel trigger="click" height="250px">
+                  <el-carousel-item v-for="item in imgList" :key="item.id">
+                    <img :src="item.url" class="lunbo">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+            </div>
+            <!-- 日期选择 -->
+            <div class="date_picker">
+              <el-date-picker
+                v-model="date"
+                @change="timeChange"
+                type="daterange"
+                size="medium"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['00:00:00', '23:59:59']">
+              </el-date-picker>
+            </div>
+            <!--表单验证-->
+            <div class="form_rules">
+              <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="密码" prop="pass">
+                  <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="checkPass">
+                  <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="年龄" prop="age">
+                  <el-input v-model.number="ruleForm2.age"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+                  <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                </el-form-item>
+              </el-form>
+              <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item
+                  label="年龄"
+                  prop="age"
+                  :rules="[
+                    { required: true, message: '年龄不能为空'},
+                    { type: 'number', message: '年龄必须为数字值'}
+                  ]"
+                >
+                  <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
+                  <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="second">
+          <div>
+            <el-steps direction="vertical" :active="3" process-status="success">
+              <el-step title="第1天" description="aa"></el-step>
+              <el-step title="第2天" description="bb"></el-step>
+              <el-step title="第3天" description="cc"></el-step>
+              <el-step title="第4天" description="dd"></el-step>
+              <el-step title="第5天" description="ee"></el-step>
+              <el-step title="第6天" description="ff"></el-step>
+            </el-steps>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="third">
+          <el-button
+            type="primary"
+            element-loading-text="拼了老命在加载"
+            @click="openFullScreen"
+            v-loading.fullscreen.lock="fullscreenLoading">
+            指令方式
+          </el-button>
+          <el-button
+            type="primary"
+            @click="openFullScreen2">
+            服务方式
+          </el-button>
+        </el-tab-pane>
+        <el-tab-pane label="fourth">定时任务补偿</el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -126,6 +168,7 @@
       return {
         show2: true,
         date: [],
+        tabPosition: 'top',
         numberValidateForm: {
           age: ''
         },
@@ -149,7 +192,11 @@
           {id:0,url:require('../assets/1.jpg')},
           {id:1,url:require('../assets/3.jpg')},
           {id:2,url:require('../assets/4.jpg')},
+          {id:3,url:require('../assets/5.jpg')},
+          {id:4,url:require('../assets/6.jpg')},
+          {id:5,url:require('../assets/7.jpg')}
         ],
+        fullscreenLoading: false
       };
     },
     methods: {
@@ -171,6 +218,25 @@
       //表单重置
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      //加载中方式一
+      openFullScreen() {
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 2000);
+      },
+      //加载中方式二
+      openFullScreen2() {
+        const loading = this.$loading({
+          lock: true,
+          text: '拼了老命在加载',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        setTimeout(() => {
+          loading.close();
+        }, 2000);
       }
     }
   }
