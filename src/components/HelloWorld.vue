@@ -120,7 +120,28 @@
             服务方式
           </el-button>
         </el-tab-pane>
-        <el-tab-pane label="fourth">定时任务补偿</el-tab-pane>
+        <el-tab-pane label="fourth">
+          <el-row>
+            <el-button type="primary" round @click="lang">浪起来</el-button>
+            <el-button type="danger" round @click="stop">停止</el-button>
+            <div style="width:500px;margin:20px auto;">{{msg}}</div>
+          </el-row>
+          <!-- 事件修饰符 -->
+          <h4>事件修饰符-阻止冒泡</h4>
+          <div @click="outerDiv" style="width:500px;height:300px;background:#B3C0D1;padding:40px;margin:0 auto">
+            <div @click="innerDiv" style="width:500px;height:300px;background:#D3DCE6;margin:0 auto">
+              <el-button type="primary" plain @click="btn">主要按钮</el-button>
+            </div>
+          </div>
+          <h4>事件修饰符-阻止默认行为</h4>
+          <a href="http://www.baidu.com" @click.prevent="linkclick">有问题去百度</a>
+          <h4>事件修饰符-阻止自己身上的冒泡，不影响子元素、父元素的冒泡</h4>
+          <div @click="outerDiv" style="width:500px;height:300px;background:#B3C0D1;padding:40px;margin:0 auto">
+            <div @click.self="innerDiv" style="width:500px;height:300px;background:#D3DCE6;margin:0 auto">
+              <el-button type="primary" plain @click="btn">主要按钮</el-button>
+            </div>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -169,6 +190,8 @@
         show2: true,
         date: [],
         tabPosition: 'top',
+        msg:"深圳是中国四大一线城市之一，广东省省辖市",
+        intervalId:null,
         numberValidateForm: {
           age: ''
         },
@@ -200,6 +223,31 @@
       };
     },
     methods: {
+      lang(){
+          if(this.intervalId!=null) return;
+          this.intervalId = setInterval( ()=>{
+          var start = this.msg.substring(0,1)
+          var end = this.msg.substring(1)
+          this.msg = end + start;
+        },300) 
+      },
+      stop(){
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      },
+      //事件修饰符
+      btn(){
+        console.log("btn按钮点击事件被触发");
+      },
+      innerDiv(){
+         console.log("innerDiv点击事件被触发");
+      },
+      outerDiv(){
+         console.log("outerDiv点击事件被触发");
+      },
+      linkclick(){
+         console.log("默认跳转行为");
+      },
       //改变时间
       timeChange(val) {
           console.log(val)
@@ -208,7 +256,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            // alert('submit!');
           } else {
             // console.log('error submit!!');
             return false;
