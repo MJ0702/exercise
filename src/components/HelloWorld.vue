@@ -378,8 +378,8 @@
           });
           return false;
         }
-        let car = {id:this.id,name:this.name,date:formatDate(new Date(),"yyyy-MM-dd")};
-        this.tableData.push(car);
+        let name = {id:this.id,name:this.name,date:formatDate(new Date(),"yyyy-MM-dd")};
+        this.tableData.push(name);
         this.id = this.name = '';
       },
       handleDelete(index, row) {
