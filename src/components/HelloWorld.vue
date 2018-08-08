@@ -229,7 +229,7 @@
           var start = this.msg.substring(0,1)
           var end = this.msg.substring(1)
           this.msg = end + start;
-        },300) 
+        },200) 
       },
       stop(){
         clearInterval(this.intervalId);
