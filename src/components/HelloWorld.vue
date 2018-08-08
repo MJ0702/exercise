@@ -105,6 +105,60 @@
               <el-step title="第6天" description="ff"></el-step>
             </el-steps>
           </div>
+          <h3>for循环添加</h3>
+          <div id="for_add">
+            <el-row :gutter="20">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <label>ID:</label>
+                  <el-input v-model="id" placeholder="请输入ID"></el-input>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  姓名:
+                  <el-input v-model="name" placeholder="请输入姓名"></el-input>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <el-button style="margin-left:-180px;" type="primary" plain @click="add">添加</el-button>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%">
+            <el-table-column
+              prop="id"
+              label="编号"
+              width="120"
+              align="left">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="姓名"
+              width="120"
+              align="left">
+            </el-table-column>
+            <el-table-column
+              fixed
+              prop="date"
+              label="日期"
+              width="150"
+              align="left">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              align="left">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-tab-pane>
         <el-tab-pane label="third">
           <el-button
@@ -219,7 +273,22 @@
           {id:4,url:require('../assets/6.jpg')},
           {id:5,url:require('../assets/7.jpg')}
         ],
-        fullscreenLoading: false
+        fullscreenLoading: false,
+        id:'',
+        name:'',
+        tableData: [{
+          id: '1001',
+          date: '2016-05-03',
+          name: '库里'
+        }, {
+          id: '1002',
+          date: '2016-06-03',
+          name: '詹姆斯'
+        }, {
+          id: '1003',
+          date: '2016-07-03',
+          name: '科比'
+        }]
       };
     },
     methods: {
@@ -285,6 +354,36 @@
         setTimeout(() => {
           loading.close();
         }, 2000);
+      },
+      add(){
+        if(this.id==''){
+          this.$message({
+            message: '请输入ID',
+            type: 'warning',
+            center: true
+          });
+          return false;
+        }
+        if(this.name==''){
+          this.$message({
+            message: '请输入姓名',
+            type: 'warning',
+            center: true
+          });
+          return false;
+        }
+        let car = {id:this.id,name:this.name,date:new Date()};
+        this.tableData.push(car);
+        this.id = this.name = '';
+      },
+      handleDelete(index, row) {
+        console.log(index, row);
+        this.tableData.splice(index,1);
+        this.$message({
+          message: '删除成功',
+          type: 'success',
+          center: true
+        });
       }
     }
   }
@@ -332,5 +431,12 @@
   .lunbo{
     height: 100%;
     width: 100%;
+  }
+  #for_add{
+    width: 1200px;
+    margin-bottom: 50px;
+  }
+  .el-input {
+    width: 230px;
   }
 </style>
