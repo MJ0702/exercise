@@ -150,7 +150,7 @@
               width="150"
               align="left">
             </el-table-column>
-            <el-table-column
+            <el-table-column 
               fixed="right"
               label="操作"
               align="left">
@@ -173,6 +173,10 @@
             @click="openFullScreen2">
             服务方式
           </el-button>
+          <h3>过滤器的使用</h3>
+          <div>
+            <p>{{filter_msg | filter_msg_format('哈哈','+1') | test_format }}</p>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="fourth">
           <el-row>
@@ -203,6 +207,7 @@
 
 
 <script>
+  import {formatDate} from '../common/date.js';
   export default {
     data() {
       var checkAge = (rule, value, callback) => {
@@ -288,7 +293,8 @@
           id: '1003',
           date: '2016-07-03',
           name: '科比'
-        }]
+        }],
+        filter_msg:'我就是我,是颜色不一样的烟火',
       };
     },
     methods: {
@@ -372,7 +378,7 @@
           });
           return false;
         }
-        let car = {id:this.id,name:this.name,date:new Date()};
+        let car = {id:this.id,name:this.name,date:formatDate(new Date(),"yyyy-MM-dd")};
         this.tableData.push(car);
         this.id = this.name = '';
       },
@@ -384,6 +390,15 @@
           type: 'success',
           center: true
         });
+      }
+    },
+    //过滤器
+    filters:{
+      filter_msg_format:function(value,arg,arg2){
+        return value.replace(/我/g,arg+arg2)
+      },
+      test_format:function(value){
+        return value+'======='
       }
     }
   }
