@@ -117,7 +117,7 @@
               <el-col :span="6">
                 <div class="grid-content bg-purple">
                   姓名:
-                  <el-input v-model="name" placeholder="请输入姓名"></el-input>
+                  <el-input v-model="name" placeholder="请输入姓名" @keyup.native.13="add"></el-input>
                 </div>
               </el-col>
               <el-col :span="6">
