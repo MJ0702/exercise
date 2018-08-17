@@ -92,6 +92,19 @@
                 </el-form-item>
               </el-form>
             </div>
+            <h1>照片墙</h1>
+            <div>
+              <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="second">
@@ -155,7 +168,8 @@
               label="操作"
               align="left">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                <el-button type="text" size="small" @click="confirm_alert(scope.$index, scope.row)">删除</el-button>
+                <!-- <el-button type="text" size="small" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -295,6 +309,9 @@
           name: '科比'
         }],
         filter_msg:'我就是我,是颜色不一样的烟火',
+        //照片墙
+        dialogImageUrl: '',
+        dialogVisible: false
       };
     },
     methods: {
@@ -312,16 +329,35 @@
       },
       //事件修饰符
       btn(){
-        console.log("btn按钮点击事件被触发");
+        // console.log("btn按钮点击事件被触发");
+        this.$message({
+            message: 'btn按钮点击事件被触发',
+            type: 'warning',
+            center: true
+        });
       },
       innerDiv(){
-         console.log("innerDiv点击事件被触发");
+        //  console.log("innerDiv点击事件被触发");
+        this.$message({
+            message: 'innerDiv点击事件被触发',
+            type: 'warning',
+            center: true
+        });
       },
       outerDiv(){
-         console.log("outerDiv点击事件被触发");
+        //  console.log("outerDiv点击事件被触发");
+        this.$message({
+            message: 'outerDiv点击事件被触发',
+            type: 'warning',
+            center: true
+        });
       },
       linkclick(){
-         console.log("默认跳转行为");
+        this.$message({
+            message: '默认跳转行为',
+            type: 'warning',
+            center: true
+        });
       },
       //改变时间
       timeChange(val) {
@@ -361,6 +397,7 @@
           loading.close();
         }, 2000);
       },
+      //表格添加
       add(){
         if(this.id==''){
           this.$message({
@@ -383,13 +420,34 @@
         this.id = this.name = '';
       },
       handleDelete(index, row) {
-        console.log(index, row);
         this.tableData.splice(index,1);
-        this.$message({
-          message: '删除成功',
-          type: 'success',
-          center: true
+      },
+      //二次确认弹窗
+      confirm_alert(index,row) {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete(index, row); //删除
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });     
         });
+      },
+      //照片墙
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
       }
     },
     //过滤器
@@ -400,16 +458,26 @@
       test_format:function(value){
         return value+'======='
       }
+    },
+    directives: {
+      focus: {
+        // 自定义指令
+        inserted: function (el) {
+          el.focus()
+        }
+      }
     }
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
-<style>
+<style lang='less'>
+   @width: 600px;
+   @height:@width - 550px;
   .transition-box {
     margin-bottom: 10px;
-    width: 600px;
-    height: 100px;
+    width: @width;
+    height: @height;
     border-radius: 4px;
     background-color: #409EFF;
     text-align: center;
@@ -422,21 +490,21 @@
     margin-top: 20px;
   }
   .form_rules{
-    width: 500px;
+    width: @width - 100px;
   }
   /* 轮播 */
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
+  .el-carousel__item {
+    h3 {
+      color: #475669;
+      font-size: 14px;
+      opacity: 0.75;
+      line-height: 150px;
+      margin: 0;
+    }
   }
-
   .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
-  }
-  
+  } 
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
@@ -448,7 +516,7 @@
     width: 100%;
   }
   #for_add{
-    width: 1200px;
+    width: 2*@width;
     margin-bottom: 50px;
   }
   .el-input {
