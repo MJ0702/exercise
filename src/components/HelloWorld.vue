@@ -76,6 +76,15 @@
                 <el-form-item label="证件号码" prop="card">
                   <el-input v-model="ruleForm2.card" ></el-input>
                 </el-form-item>
+                <el-form-item label="所在地区" prop="address">
+                  <el-cascader
+                    size="large"
+                    style="width: 100%"
+                    :options="options"
+                    v-model="selectedOptions"
+                    @change="handleCityChange">
+                  </el-cascader>
+                </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
                   <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -230,6 +239,14 @@
   import {formatDate} from '../common/date.js';
   import {isvalidPhone} from '../common/common.js';
   import {isIDCard} from '../common/common.js'
+  import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'  //中国省市区级联动
+  //provinceAndCityData是省市二级联动数据（不带“全部”选项）
+  //regionData是省市区三级联动数据（不带“全部”选项）
+  //provinceAndCityDataPlus是省市区三级联动数据（带“全部”选项）
+  //regionDataPlus是省市区三级联动数据（带“全部”选项）
+  //"全部"选项绑定的value是空字符串""
+  //CodeToText是个大对象，属性是区域码，属性值是汉字 用法例如：CodeToText['110000']输出北京市
+  //TextToCode是个大对象，属性是汉字，属性值是区域码 用法例如：TextToCode['北京市'].code输出110000,TextToCode['北京市']['市辖区'].code输出110100,TextToCode['北京市']['市辖区']['朝阳区'].code输出110105
   export default {
     data() {
       //年龄验证
@@ -307,6 +324,7 @@
           age: '',
           phone:'',
           card:'',
+          address:''
         },
         rules2: {
           pass: [
@@ -323,6 +341,9 @@
           ],
           card:[
             { validator: validIDCard, trigger: 'blur' }
+          ],
+          address:[
+            { required: true, message: '请选择所在地区', trigger: 'blur' }
           ]
         },
         imgList:[
@@ -352,7 +373,9 @@
         filter_msg:'我就是我,是颜色不一样的烟火',
         //照片墙
         dialogImageUrl: '',
-        dialogVisible: false
+        dialogVisible: false,
+        options: regionData,
+        selectedOptions: []
       };
     },
     methods: {
@@ -409,6 +432,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // alert('submit!');
+            alert(valid);
           } else {
             // console.log('error submit!!');
             return false;
@@ -489,6 +513,17 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      //中国地区省市联动
+      handleCityChange (value) {
+        // console.log(value)
+        const val = CodeToText[value];
+        const arr = [];
+        for(let i =0; i<value.length;i++){
+          arr.push(CodeToText[value[i]]);
+        } 
+        console.log(arr);
+        return arr;     
       }
     },
     //过滤器
