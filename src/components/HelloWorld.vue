@@ -70,6 +70,12 @@
                 <el-form-item label="年龄" prop="age">
                   <el-input v-model.number="ruleForm2.age"></el-input>
                 </el-form-item>
+                <el-form-item label="手机号码" prop="phone">
+                  <el-input v-model.number="ruleForm2.phone" ></el-input>
+                </el-form-item>
+                <el-form-item label="证件号码" prop="card">
+                  <el-input v-model="ruleForm2.card" ></el-input>
+                </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
                   <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -189,7 +195,7 @@
           </el-button>
           <h3>过滤器的使用</h3>
           <div>
-            <p>{{filter_msg | filter_msg_format('哈哈','+1') | test_format }}</p>
+            <p>{{filter_msg | filter_msg_format('**','+1') | test_format }}</p>
           </div>
         </el-tab-pane>
         <el-tab-pane label="fourth">
@@ -222,27 +228,33 @@
 
 <script>
   import {formatDate} from '../common/date.js';
+  import {isvalidPhone} from '../common/common.js';
+  import {isIDCard} from '../common/common.js'
   export default {
     data() {
+      //年龄验证
       var checkAge = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('年龄不能为空'));
+          return callback(new Error('年龄不能为空！'));
         }
         setTimeout(() => {
           if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
+            callback(new Error('请输入数字值！'));
           } else {
             if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
+              callback(new Error('必须年满18岁！'));
+            } else if(value > 70){
+              callback(new Error('年龄太大了！'));
+            }else {
               callback();
             }
           }
         }, 1000);
       };
+      //密码验证
       var validatePass = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入密码'));
+          callback(new Error('请输入密码！'));
         } else {
           if (this.ruleForm2.checkPass !== '') {
             this.$refs.ruleForm2.validateField('checkPass');
@@ -250,11 +262,32 @@
           callback();
         }
       };
+      //验证两次输入密码是否相同
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
+          callback(new Error('请再次输入密码！'));
         } else if (value !== this.ruleForm2.pass) {
           callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      //验证手机号
+      var validPhone=(rule, value,callback)=>{
+        if (!value){
+          callback(new Error('请输入手机号码！'))
+        } else if (!isvalidPhone(value)){
+          callback(new Error('您输入的手机号码或格式错误！'))
+        } else {
+          callback();
+        }
+      };
+      //验证身份证
+      var validIDCard=(rule, value,callback)=>{
+        if (!value){
+          callback(new Error('请输入证件号码！'))
+        } else if (!isIDCard(value)){
+          callback(new Error('您输入的身份证号码格式有误！'))
         } else {
           callback();
         }
@@ -271,7 +304,9 @@
         ruleForm2: {
           pass: '',
           checkPass: '',
-          age: ''
+          age: '',
+          phone:'',
+          card:'',
         },
         rules2: {
           pass: [
@@ -282,6 +317,12 @@
           ],
           age: [
             { validator: checkAge, trigger: 'blur' }
+          ],
+          phone:[
+            { validator: validPhone, trigger: 'blur' }
+          ],
+          card:[
+            { validator: validIDCard, trigger: 'blur' }
           ]
         },
         imgList:[
@@ -518,8 +559,8 @@
   #for_add{
     width: 2*@width;
     margin-bottom: 50px;
-  }
-  .el-input {
-    width: 230px;
+    .el-input {
+      width: 230px;
+    }
   }
 </style>
