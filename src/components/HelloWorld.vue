@@ -546,7 +546,6 @@
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<!-- git 很牛逼吗？ 是的！-->
 <style lang='less'>
    @width: 600px;
    @height:@width - 550px;
