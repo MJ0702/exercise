@@ -206,6 +206,9 @@
           <div>
             <p>{{filter_msg | filter_msg_format('**','+1') | test_format }}</p>
           </div>
+           <div class="analyzeSystem">
+            <div :class="className" :style="{height:height,width:width}" ref="myEchart"></div>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="fourth">
           <el-row>
@@ -240,6 +243,16 @@
   import {isvalidPhone} from '../common/common.js';
   import {isIDCard} from '../common/common.js'
   import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'  //中国省市区级联动
+  ////Echart图表
+    //----全部引入
+    //import echarts from "echarts"; 
+  let echarts = require('echarts/lib/echarts')
+    //----按需引入
+    // 引入柱状图组件
+    require('echarts/lib/chart/pie')
+    // 引入提示框和title组件
+    require('echarts/lib/component/tooltip')
+    require('echarts/lib/component/title')
   //provinceAndCityData是省市二级联动数据（不带“全部”选项）
   //regionData是省市区三级联动数据（不带“全部”选项）
   //provinceAndCityDataPlus是省市区三级联动数据（带“全部”选项）
@@ -248,9 +261,23 @@
   //CodeToText是个大对象，属性是区域码，属性值是汉字 用法例如：CodeToText['110000']输出北京市
   //TextToCode是个大对象，属性是汉字，属性值是区域码 用法例如：TextToCode['北京市'].code输出110000,TextToCode['北京市']['市辖区'].code输出110100,TextToCode['北京市']['市辖区']['朝阳区'].code输出110105
   export default {
+    props: {
+      className: {
+        type: String,
+        default: "mj_echarts"
+      },
+      width: {
+        type: String,
+        default: "800px"
+      },
+      height: {
+        type: String,
+        default: "600px"
+      }
+    },
     data() {
       //年龄验证
-      var checkAge = (rule, value, callback) => {
+      const checkAge = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('年龄不能为空！'));
         }
@@ -269,7 +296,7 @@
         }, 1000);
       };
       //密码验证
-      var validatePass = (rule, value, callback) => {
+      const validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码！'));
         } else {
@@ -280,7 +307,7 @@
         }
       };
       //验证两次输入密码是否相同
-      var validatePass2 = (rule, value, callback) => {
+      const validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码！'));
         } else if (value !== this.ruleForm2.pass) {
@@ -290,7 +317,7 @@
         }
       };
       //验证手机号
-      var validPhone=(rule, value,callback)=>{
+      const validPhone=(rule, value,callback)=>{
         if (!value){
           callback(new Error('请输入手机号码！'))
         } else if (!isvalidPhone(value)){
@@ -300,7 +327,7 @@
         }
       };
       //验证身份证
-      var validIDCard=(rule, value,callback)=>{
+      const validIDCard=(rule, value,callback)=>{
         if (!value){
           callback(new Error('请输入证件号码！'))
         } else if (!isIDCard(value)){
@@ -375,15 +402,26 @@
         dialogImageUrl: '',
         dialogVisible: false,
         options: regionData,
-        selectedOptions: []
+        selectedOptions: [],
+        chart: null
       };
+    },
+    mounted() {
+      this.initChart();
+    },
+    beforeDestroy() {
+      if (!this.chart) {
+        return;
+      }
+      this.chart.dispose();
+      this.chart = null;
     },
     methods: {
       lang(){
           if(this.intervalId!=null) return;
           this.intervalId = setInterval( ()=>{
-          var start = this.msg.substring(0,1)
-          var end = this.msg.substring(1)
+          let start = this.msg.substring(0,1)
+          let end = this.msg.substring(1)
           this.msg = end + start;
         },200) 
       },
@@ -524,6 +562,83 @@
         } 
         console.log(arr);
         return arr;     
+      },
+      //Echart图表
+      initChart() { 
+        this.chart = echarts.init(this.$refs.myEchart)
+        // 把配置和数据放这里
+        this.chart.setOption({
+        backgroundColor: '#2c343c',
+
+        title: {
+            text: 'My first Echart',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series : [
+            {
+                name:'访问来源',
+                type:'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:274, name:'联盟广告'},
+                    {value:235, name:'视频广告'},
+                    {value:400, name:'搜索引擎'}
+                ].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    });
       }
     },
     //过滤器
@@ -549,6 +664,7 @@
 <style lang='less'>
    @width: 600px;
    @height:@width - 550px;
+   @margin:0 auto;
   .transition-box {
     margin-bottom: 10px;
     width: @width;
@@ -596,5 +712,8 @@
     .el-input {
       width: 230px;
     }
+  }
+  .mj_echarts{
+    margin:@margin;
   }
 </style>
