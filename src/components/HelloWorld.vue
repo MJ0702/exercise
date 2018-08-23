@@ -33,7 +33,9 @@
                 <span class="demonstration">默认 Hover 指示器触发</span>
                 <el-carousel height="250px">
                   <el-carousel-item v-for="item in imgList" :key="item.id">
-                    <img :src="item.url" class="lunbo">
+                    <a :href="item.href">
+                      <img :src="item.url" class="lunbo">
+                    </a>
                   </el-carousel-item>
                 </el-carousel>
               </div>
@@ -374,12 +376,12 @@
           ]
         },
         imgList:[
-          {id:0,url:require('../assets/1.jpg')},
-          {id:1,url:require('../assets/3.jpg')},
-          {id:2,url:require('../assets/4.jpg')},
-          {id:3,url:require('../assets/5.jpg')},
-          {id:4,url:require('../assets/6.jpg')},
-          {id:5,url:require('../assets/7.jpg')}
+          {id:0,url:require('../assets/1.jpg'),href:"/#/product"},
+          {id:1,url:require('../assets/3.jpg'),href:"/#/news"},
+          {id:2,url:require('../assets/4.jpg'),href:"/#/about"},
+          {id:3,url:require('../assets/5.jpg'),href:"/#/product"},
+          {id:4,url:require('../assets/6.jpg'),href:"/#/news"},
+          {id:5,url:require('../assets/7.jpg'),href:"/#/about"}
         ],
         fullscreenLoading: false,
         id:'',
@@ -417,6 +419,9 @@
       this.chart = null;
     },
     methods: {
+      // img_click(){
+      //   console.log(this.item);
+      // },
       lang(){
           if(this.intervalId!=null) return;
           this.intervalId = setInterval( ()=>{
