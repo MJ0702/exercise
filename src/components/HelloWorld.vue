@@ -2,7 +2,7 @@
   <!-- 按钮显隐-->
   <div>
     <!-- Tab标签 -->
-    <div>
+    <div style="margin-top:61px;padding:10px;">
       <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
         <el-radio-button label="top">top</el-radio-button>
         <el-radio-button label="right">right</el-radio-button>

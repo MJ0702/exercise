@@ -7,17 +7,14 @@
      -->
       <nav>
         <el-row>
-          <el-col :span="6"><div class="grid-content bg-purple">MJ'Home</div></el-col>
-          <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+          <el-col :span="4"><div class="grid-content bg-purple">MJ'Home</div></el-col>
+          <el-col :span="10"><div class="grid-content bg-purple-light">8888</div></el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
             <el-menu
-             :default-active="this.$router.path" 
+             :default-active="this.$route.path" 
              router mode="horizontal"
-              @click="handleClick"
-              background-color="#000"
-              text-color="#fff"
-              active-text-color="#ffd04b"
+              class="el-menu-vertical-demo"
              >
               <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
                   {{ item.navItem }}
@@ -25,7 +22,7 @@
             </el-menu>
             </div>
           </el-col>
-          <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+          <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         </el-row>
      </nav>
     <router-view></router-view>
@@ -37,32 +34,15 @@ export default {
   name: 'App',
   data() {
     return {
-      activeName: 'first',
       navList:[
-            {name:'/HelloWorld',navItem:'HelloWorld'},
-            {name:'/about',navItem:'about'},
-            {name:'/news',navItem:'news'},
-            {name:'/product',navItem:'product'},
+            {name:'/HelloWorld',navItem:'首页'},
+            {name:'/about',navItem:'关于'},
+            {name:'/news',navItem:'新闻'},
+            {name:'/product',navItem:'产品'},
         ]
     };
   },
   methods: {
-    handleClick(tab, event) {
-      // console.log(tab, event);
-      let path = this.activeName;
-      // console.log(path);
-      // 根据当前的选项卡的选择指向相应的页面
-      if (this.activeName === 'first') {
-          path = '/HelloWorld';
-      }else if(this.activeName === 'second'){
-          path = '/about';
-      }else if(this.activeName === 'third'){
-          path = '/news';
-      }else if(this.activeName === 'fourth'){
-          path = '/product';
-      } 
-      this.$router.push({path: path});
-    },
   }
 }
 </script>
@@ -79,17 +59,20 @@ body{
   text-align: center;
   color: #2c3e50;
   nav {
-    min-height: 68px;
+    min-height: 61px;
     margin-bottom: 0;
     position: fixed;
     z-index: 1000;
     width: 100%;
-    background-color: #303848;
-    color:#FFF;
+    background-color: #FFF;
+    color:#000;
+    position:fixed;
+    top:0;
+    box-shadow:0 1px 1px rgba(0,0,0,.08);
   }
-  // nav.navbar.nav-bg {
-  //   transition: all linear .8s;
-  //   background-color: #303848;
-  // }
+  .grid-content {
+    height:61px;
+    line-height: 61px;
+  }
 }
 </style>

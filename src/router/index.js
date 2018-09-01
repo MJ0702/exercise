@@ -8,6 +8,7 @@ import product from '@/components/product'
 Vue.use(Router)
 
 export default new Router({
+  linkActiveClass:"is-active",
   routes: [
     {
       path: '/HelloWorld',
@@ -32,8 +33,7 @@ export default new Router({
     //重定向
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      redirect: '/HelloWorld'
     },
   ]
 })
