@@ -25,7 +25,7 @@
           <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         </el-row>
      </nav>
-    <router-view></router-view>
+     <router-view></router-view>
   </div>
 </template>
 
