@@ -22,7 +22,14 @@
             </el-menu>
             </div>
           </el-col>
-          <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
+          <el-col :span="4">
+            <div class="grid-content bg-purple-light">
+              <a class="git" href="https://github.com/MJ0702" target="_blank">
+                <i class="git_icon"></i>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </el-col>
         </el-row>
      </nav>
      <transition name="slide-fade" mode="out-in">
@@ -89,6 +96,19 @@ body{
   /* .slide-fade-leave-active for below version 2.1.8 */ {
       // transform: translateX(10px);
       opacity: 0;
+  }
+  .git{
+    display:inline-block;
+    text-decoration:none;
+    color:#909399;
+    .git_icon{
+      display:inline-block;
+      background-image:url(assets/GitHub.png);
+      width:24px;
+      height:24px;
+      vertical-align:-6px;
+      margin-right:3px;
+    }
   }
 }
 </style>
