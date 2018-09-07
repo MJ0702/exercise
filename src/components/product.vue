@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <h1>product</h1>
-        <p>{{productMsg}}</p>
-    </div>
+  <div>
+    <h1>product</h1>
+    <p>{{productMsg}}</p>
+  </div>
 </template>
 <script>
     export default {

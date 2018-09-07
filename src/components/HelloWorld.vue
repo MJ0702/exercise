@@ -208,7 +208,7 @@
           <div>
             <p>{{filter_msg | filter_msg_format('**','+1') | test_format }}</p>
           </div>
-           <div class="analyzeSystem">
+          <div class="analyzeSystem">
             <div :class="className" :style="{height:height,width:width}" ref="myEchart"></div>
           </div>
         </el-tab-pane>
@@ -237,6 +237,7 @@
       </el-tabs>
     </div>
   </div>
+
 </template>
 
 

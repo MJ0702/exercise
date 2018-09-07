@@ -25,7 +25,9 @@
           <el-col :span="4"><div class="grid-content bg-purple-light"></div></el-col>
         </el-row>
      </nav>
-     <router-view></router-view>
+     <transition name="slide-fade" mode="out-in">
+       <router-view></router-view>
+     </transition>
   </div>
 </template>
 
@@ -73,6 +75,20 @@ body{
   .grid-content {
     height:61px;
     line-height: 61px;
+  }
+  .el-menu--horizontal>.el-menu-item{
+    height:61px;
+  }
+  .slide-fade-enter-active {
+      transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+      transition: all .83 cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+      // transform: translateX(10px);
+      opacity: 0;
   }
 }
 </style>

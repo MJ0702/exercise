@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <h1>news</h1>
-        <p>{{newsMsg}}</p>
-    </div>
+  <div>
+    <h1>news</h1>
+    <p>{{newsMsg}}</p>
+  </div>
 </template>
 <script>
     export default {
