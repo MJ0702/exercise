@@ -22,11 +22,11 @@
             </el-menu>
             </div>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="4" style="text-align:left">
             <div class="grid-content bg-purple-light">
-              <a class="git" href="https://github.com/MJ0702" target="_blank">
+              <a class="git" href="https://github.com/MJ0702" target="_blank" title="访问我的GitHub">
                 <i class="git_icon"></i>
-                <span>GitHub</span>
+                <!-- <span>GitHub</span> -->
               </a>
             </div>
           </el-col>
