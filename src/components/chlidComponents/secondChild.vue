@@ -1,16 +1,14 @@
 <template>
   <div>
-    <h1>路由嵌套传值</h1>
-    <p>{{newsMsg}}</p>
+    <h3>我是路由嵌套</h3>
   </div>
 </template>
 <script>
     export default {
         data () {
             return {
-                newsMsg: '我是news组件'
             }
-        }
+        },
     }
 </script>
 <style lang="less">

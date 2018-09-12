@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import about from '@/components/about'
 import news from '@/components/news'
 import product from '@/components/product'
-
+import secondChild from '@/components/chlidComponents/secondChild'
 Vue.use(Router)
 
 export default new Router({
@@ -28,7 +28,10 @@ export default new Router({
     {
       path: "/product",
       name: 'product',
-      component: product
+      component: product,
+      children:[
+        {path:"secondChild",name:"secondChild",component:secondChild}
+      ]
     },
     //重定向
     {

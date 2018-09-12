@@ -12,7 +12,7 @@
           <el-col :span="6">
             <div class="grid-content bg-purple">
             <el-menu
-             :default-active="this.$route.path" 
+             :default-active="activeTab" 
              router mode="horizontal"
               class="el-menu-vertical-demo"
              >
@@ -26,7 +26,6 @@
             <div class="grid-content bg-purple-light">
               <a class="git" href="https://github.com/MJ0702" target="_blank" title="访问我的GitHub">
                 <i class="git_icon"></i>
-                <!-- <span>GitHub</span> -->
               </a>
             </div>
           </el-col>
@@ -40,15 +39,25 @@
 
 <script>
 export default {
+  created() {
+    let path = this.$route.path;
+    if(path == '/product/secondChild'){
+      this.activeTab = '/product'
+    }else{
+      this.activeTab = path;
+    }
+    // console.log(path);
+  },
   name: 'App',
   data() {
     return {
+      activeTab:"/HelloWorld",
       navList:[
-            {name:'/HelloWorld',navItem:'首页'},
-            {name:'/about',navItem:'关于'},
-            {name:'/news',navItem:'新闻'},
-            {name:'/product',navItem:'产品'},
-        ]
+        {name:'/HelloWorld',navItem:'首页'},
+        {name:'/about',navItem:'关于'},
+        {name:'/news',navItem:'新闻'},
+        {name:'/product',navItem:'产品'},
+      ]
     };
   },
   methods: {

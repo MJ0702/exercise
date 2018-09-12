@@ -20,6 +20,9 @@
         methods:{
             child_show(){
                 this.$emit('fun','666');
+            },
+            sonFun(){
+                console.log('这是子组件的方法！');
             }
         }
     }
