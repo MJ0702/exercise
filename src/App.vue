@@ -87,6 +87,10 @@ body{
     position:fixed;
     top:0;
     box-shadow:0 1px 1px rgba(0,0,0,.08);
+    .el-row{
+          width: 1200px;
+          margin: 0 auto;
+    }
   }
   .grid-content {
     height:61px;
