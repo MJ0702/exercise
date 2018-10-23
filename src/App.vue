@@ -24,7 +24,7 @@
           </el-col>
           <el-col :span="4" style="text-align:left">
             <div class="grid-content bg-purple-light">
-              <a class="git" href="https://github.com/MJ0702" target="_blank" title="访问我的GitHub">
+              <a class="git" href="https://github.com/MJ0702" target="_blank" title="点击访问">
                 <i class="git_icon"></i>
               </a>
             </div>

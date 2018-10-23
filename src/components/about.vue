@@ -3,7 +3,7 @@
     <h1>about</h1>
     <p>{{aboutMsg}}</p>
     <ul id="container">
-        <li v-for="item in imgList" :key="item.id">
+        <li v-for="(item,i) in imgList" :key="i">
             <img v-lazy="item.url">
         </li>
     </ul>
@@ -76,7 +76,7 @@
 </script>
 <style lang="less">
 @width:200px;
-@height:100px;
+@height:120px;
     #container{
         li{
             list-style: none;

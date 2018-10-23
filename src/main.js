@@ -12,7 +12,7 @@ Vue.use(ElementUI)
 //图片懒加载
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error:'./static/loaderror.png',
+  error:'./static/picerror.svg',
   loading: './static/loading.gif',
   attempt: 1,
   throttleWait:300,  //等待秒数
