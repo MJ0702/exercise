@@ -32,7 +32,7 @@
                 console.log('这是父组件的方法!'+data);
             },
             showSonFun(){
-                console.log(this.$refs);
+                // console.log(this.$refs);
                 this.$refs.son.sonFun();
             }
         }
