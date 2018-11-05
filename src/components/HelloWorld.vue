@@ -469,8 +469,8 @@
       },
       //改变时间
       timeChange(val) {
-          console.log(val)
-        },
+        console.log(val)
+      },
       //提交表单
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
