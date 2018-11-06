@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" oncontextmenu="return false;" onselectstart="return false"> <!--oncontextmenu是禁止右键的，onselectstart是禁止复制的。 -->
     <!-- <img src="./assets/logo.png"> -->
     <!-- router-link 定义点击后导航到哪个路径下
       <router-link to="/home">Home</router-link>

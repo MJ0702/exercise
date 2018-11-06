@@ -11,9 +11,9 @@
 </template>
 <script>
     export default {
-        data () {
+        data() {
             return {
-                aboutMsg: 'vue-lazyload 图片懒加载',
+                aboutMsg: 'vue-lazyload插件图片懒加载',
                 imgList:[
                     {id:0,url:require('../assets/1.jpg')},
                     {id:1,url:require('../assets/3.jpg')},
@@ -84,6 +84,13 @@
                 width: @width;
                 height: @height;
                 margin-bottom: 20px;
+                moz-user-select: -moz-none;
+                -moz-user-select: none;
+                -o-user-select:none;
+                -khtml-user-select:none;
+                -webkit-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
             }
             img[lazy=loading]{
                 width: 30px;

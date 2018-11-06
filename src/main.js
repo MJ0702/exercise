@@ -15,7 +15,7 @@ Vue.use(VueLazyload, {
   error:'./static/picerror.svg',
   loading: './static/loading.gif',
   attempt: 1,
-  throttleWait:300,  //等待秒数
+  // throttleWait:10,  //等待秒数
   listenEvents:['mousewheel','scroll ']  //监听事件
 })
 
